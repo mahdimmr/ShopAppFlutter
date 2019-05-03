@@ -10,6 +10,7 @@ import 'history.dart';
 import 'aboutUs.dart';
 import 'loginLogout.dart';
 import 'delivery.dart';
+import 'item_detail.dart';
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -66,71 +67,81 @@ class _MyHomePageState extends State<MyHomePage> {
                   itemCount: storeItems.length,
                   padding: EdgeInsets.all(8.0),
                   itemBuilder: (BuildContext context, int i) {
-                    return Card(
-                      child: Stack(
-                        alignment: FractionalOffset.topLeft,
-                        children: <Widget>[
-                          Stack(
-                            alignment: Alignment.bottomCenter,
-                            children: <Widget>[
-                              Container(
-                                decoration: BoxDecoration(
-                                    image: DecorationImage(
-                                        image: NetworkImage(
-                                            storeItems[i].itemImage),
-                                        fit: BoxFit.fitWidth)),
-                              ),
-                              Container(
-                                color: Colors.black.withAlpha(100),
-                                height: 35.0,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                    return GestureDetector(
+                      onTap: (){
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> ItemDetail(
+                          itemImage: storeItems[i].itemImage,
+                          itemName: storeItems[i].itemName,
+                          itemRating: storeItems[i].itemRating,
+                          itemPrice: storeItems[i].itemPrice,
+                        )));
+                      },
+                      child: Card(
+                        child: Stack(
+                          alignment: FractionalOffset.topLeft,
+                          children: <Widget>[
+                            Stack(
+                              alignment: Alignment.bottomCenter,
+                              children: <Widget>[
+                                Container(
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          image: NetworkImage(
+                                              storeItems[i].itemImage),
+                                          fit: BoxFit.fitWidth)),
+                                ),
+                                Container(
+                                  color: Colors.black.withAlpha(100),
+                                  height: 35.0,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceEvenly,
+                                      children: <Widget>[
+                                        Text(
+                                          "${storeItems[i].itemName.substring(0, 6)}...",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              fontSize: 16.0,
+                                              color: Colors.white),
+                                        ),
+                                        Text(
+                                          "${storeItems[i].itemPrice}Rial",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              color: Colors.red[500]),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: <Widget>[
+                                Container(
+                                  height: 30.0,
+                                  width: 50.0,
+                                  decoration: BoxDecoration(
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(5.0),
+                                          bottomRight: Radius.circular(5.0)),
+                                  ),
                                   child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
                                     children: <Widget>[
-                                      Text(
-                                        "${storeItems[i].itemNama.substring(0, 6)}...",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: 16.0,
-                                            color: Colors.white),
-                                      ),
-                                      Text(
-                                        "${storeItems[i].itemPrice}Rial",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            color: Colors.red[500]),
-                                      )
+                                      Icon(Icons.star, color: Colors.blue,),
+                                      Text("0.0", style: TextStyle(color: Colors.white),)
                                     ],
                                   ),
                                 ),
-                              )
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Container(
-                                height: 30.0,
-                                width: 50.0,
-                                decoration: BoxDecoration(
-                                    color: Colors.black,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(5.0),
-                                        bottomRight: Radius.circular(5.0)),
-                                ),
-                                child: Row(
-                                  children: <Widget>[
-                                    Icon(Icons.star, color: Colors.blue,),
-                                    Text("0.0", style: TextStyle(color: Colors.white),)
-                                  ],
-                                ),
-                              ),
-                              IconButton(icon: Icon(Icons.favorite_border, color: Colors.blue), onPressed: () {},)
-                            ],
-                          )
-                        ],
+                                IconButton(icon: Icon(Icons.favorite_border, color: Colors.blue), onPressed: () {},)
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     );
                   }))
